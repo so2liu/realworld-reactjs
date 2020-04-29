@@ -1,0 +1,26 @@
+.default {
+  background-color: #f0f0f0;
+  position: static;
+  position: -webkit-sticky;
+  padding: 4px 16px;
+  margin: 0;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.items {
+  width: 66%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.item {
+  text-decoration: none;
+  color: black;
+}
+
+.item:hover {
+  text-decoration: underline solid black;
+}

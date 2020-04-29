@@ -1,26 +1,50 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "gestalt/dist/gestalt.css";
+import "antd/dist/antd.css";
+
+import Navbar from "./components/Navbar";
+import Home from "./containers/Home";
+import { Signup, Login } from "./containers/Auth";
+import { useUserStore } from "./contextProvider";
+import { observer } from "mobx-react-lite";
+import { Route, NavLink, Switch, Redirect } from "react-router-dom";
+import Setting from "./containers/Settings";
+import NewPost from "./containers/NewPost";
+import NewShort from "./containers/NewShort";
 
 function App() {
+  const user = useUserStore();
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Navbar
+        isSignedin={user.isSignedin}
+        user={user.currentUser}
+        logout={user.logout}
+      />
+      <pre>{JSON.stringify(user.currentUser, null, 2)}</pre>
+      <Switch>
+        <Route path="/home">
+          <Home />
+        </Route>
+        <Route path="/signup">
+          <Signup />
+        </Route>
+        <Route path="/login">
+          <Login />
+        </Route>
+        <Route path="/short">
+          <NewShort />
+        </Route>
+        <Route path="/editor">
+          <NewPost />
+        </Route>
+        <Route path="/settings">
+          <Setting />
+        </Route>
+        <Redirect to="/home" />
+      </Switch>
     </div>
   );
 }
 
-export default App;
+export default observer(App);

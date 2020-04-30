@@ -3,11 +3,11 @@ import { TextField, Heading } from "gestalt";
 
 import Form, { TInput } from "../components/Form";
 import { signup, login } from "../API";
-import { useUserStore } from "../contextProvider";
+import { useStore } from "../contextProvider";
 import { observer } from "mobx-react-lite";
 
 export const Signup = observer(() => {
-  const user = useUserStore();
+  const user = useStore().userStore;
   const signupInputs: Array<TInput> = [
     { name: "username", label: "Username" },
     { name: "email", label: "Email", type: "email" },
@@ -28,7 +28,7 @@ export const Signup = observer(() => {
 });
 
 export const Login = observer(() => {
-  const user = useUserStore();
+  const user = useStore().userStore;
   const signupInputs: Array<TInput> = [
     { name: "email", label: "Email", type: "email" },
     { name: "password", label: "Password", type: "password" },

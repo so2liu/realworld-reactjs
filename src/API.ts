@@ -7,6 +7,7 @@ import {
   Comment,
   NewComment,
   User,
+  QueryArticles,
 } from "./Interface";
 
 const baseURL = "https://conduit.productionready.io/api";
@@ -24,13 +25,6 @@ const handleError = (error: { errors: string[] }) => {
   console.log(error.errors);
 };
 
-interface QueryArticles {
-  tag?: string;
-  author?: string;
-  favorited?: string;
-  limit?: number;
-  offset?: number;
-}
 export const useArticles = (queries?: QueryArticles) => {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -58,7 +52,7 @@ export const useArticles = (queries?: QueryArticles) => {
   return result;
 };
 
-export const useAllTags = () => {
+export const useHotTags = () => {
   const [allTags, setAllTags] = useState([] as string[]);
   useEffect(() => {
     instance
@@ -137,14 +131,16 @@ export const updateUser = async (values: Partial<Profile>) => {
   }
 };
 
-export const createArticle = async (article: NewArticle) => {
+export const createArticle = async (
+  article: NewArticle
+): Promise<void | Article> => {
   const body = {
     article,
   };
   try {
     const res = await instance.post("/articles", body);
     console.log("New Post finished");
-    return res.data;
+    return res.data.article;
   } catch (err) {
     return handleError(err.response.data);
   }

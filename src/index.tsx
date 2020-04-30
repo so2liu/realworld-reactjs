@@ -4,6 +4,7 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter as Router } from "react-router-dom";
 import { UserStoreProvider } from "./contextProvider";
+import "mobx-react-lite/batchingForReactDom";
 
 ReactDOM.render(
   <React.StrictMode>

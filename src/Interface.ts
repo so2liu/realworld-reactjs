@@ -45,3 +45,11 @@ export interface Tab {
   text: string;
   href: string;
 }
+
+export type QueryArticles = {
+  tag: string;
+  author: string;
+  favorited: string;
+  limit: number;
+  offset: number;
+};

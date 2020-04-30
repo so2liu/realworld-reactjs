@@ -2,6 +2,7 @@ import { Profile } from "../Interface";
 import { Box, Avatar, Button, Text } from "gestalt";
 import React, { useState } from "react";
 import { unfollow, follow } from "../API";
+import { Link } from "react-router-dom";
 
 export const ProfileRow = (props: { user: Profile }) => {
   const [user, setUser] = useState(props.user);
@@ -18,8 +19,10 @@ export const ProfileRow = (props: { user: Profile }) => {
         <Avatar name={user.username} size="md" src={user.image || undefined} />
       </Box>
       <Box paddingX={1} flex="grow">
-        <Text weight="bold">{user.username}</Text>
-        <Text>{user.bio}</Text>
+        <Link to={`/users/${user.username}`}>
+          <Text weight="bold">{user.username}</Text>
+          <Text>{user.bio}</Text>
+        </Link>
       </Box>
       {user.following ? (
         <Box paddingX={1}>

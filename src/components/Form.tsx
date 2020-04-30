@@ -13,7 +13,7 @@ export interface Form {
   btnText: string;
   extraValue?: object;
   children?: JSX.Element | JSX.Element[];
-  sendReq: (x: any) => Promise<void | AxiosResponse<any>>;
+  sendReq: (x: any) => Promise<void | any>;
   setRes: React.Dispatch<React.SetStateAction<any>> | ((x: object) => void);
 }
 export default (props: Form) => {

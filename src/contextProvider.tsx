@@ -1,27 +1,37 @@
 import React, { createContext, useContext } from "react";
 import { useLocalStore } from "mobx-react-lite";
 
-import { createUserStore, TUserStore } from "./stores";
+import {
+  createUserStore,
+  TUserStore,
+  createArticleStore,
+  TArticleStore,
+} from "./stores";
 
 const UserStoreContext = createContext<TUserStore | null>(null);
+const ArticleStoreContext = createContext<TArticleStore | null>(null);
 
 export const UserStoreProvider = ({
   children,
 }: {
   children: JSX.Element | JSX.Element[];
 }) => {
-  const store = useLocalStore(createUserStore);
+  const userStore = useLocalStore(createUserStore);
+  const articleStore = useLocalStore(createArticleStore);
   return (
-    <UserStoreContext.Provider value={store}>
-      {children}
+    <UserStoreContext.Provider value={userStore}>
+      <ArticleStoreContext.Provider value={articleStore}>
+        {children}
+      </ArticleStoreContext.Provider>
     </UserStoreContext.Provider>
   );
 };
 
-export const useUserStore = () => {
-  const store = useContext(UserStoreContext);
-  if (!store) {
-    throw new Error("userStore must be used within a UserStoreProvider");
+export const useStore = () => {
+  const userStore = useContext(UserStoreContext);
+  const articleStore = useContext(ArticleStoreContext);
+  if (!userStore || !articleStore) {
+    throw new Error("userStore must be used within a store provider");
   }
-  return store;
+  return { userStore, articleStore };
 };

@@ -1,9 +1,9 @@
-import React, { Props } from "react";
+import React, { Props, useState, useEffect } from "react";
 import styles from "./Navbar.module.css";
 import { NavLink } from "react-router-dom";
-import { Box, Avatar, Button, IconButton } from "gestalt";
+import { Box, Avatar, Button, IconButton, Link } from "gestalt";
 import { User } from "../Interface";
-import { observer } from "mobx-react-lite";
+import { observer, useObserver } from "mobx-react-lite";
 
 interface Navbar {
   isSignedin: boolean;
@@ -55,18 +55,19 @@ const Navbar = observer(({ isSignedin, user, logout }: Navbar) => {
       </Box>
     </>
   );
-  return (
-    <Box display="flex" direction="row" paddingX={2}>
-      <Box flex="grow">
-        <NavLink className={styles.item} to="/home">
-          Home
-        </NavLink>
+
+  return useObserver(() => (
+    <>
+      <Box display="flex" direction="row" paddingX={2}>
+        <Box flex="grow">
+          <Link href="http://localhost:3000/">Home</Link>
+        </Box>
+        <Box display="flex" direction="row">
+          {isSignedin ? authNav : guestNav}
+        </Box>
       </Box>
-      <Box display="flex" direction="row">
-        {isSignedin ? authNav : guestNav}
-      </Box>
-    </Box>
-  );
+    </>
+  ));
 });
 
 export default Navbar;

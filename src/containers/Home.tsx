@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { Heading, Box, Badge, Spinner, Button } from "gestalt";
 import { Tag } from "antd";
 import { Tab, Article } from "../Interface";
-import { useArticles, useAllTags } from "../API";
+import { useArticles, useHotTags } from "../API";
 import ArticleBox from "../components/ArticleBox";
 import Tabs from "../components/Tabs";
 import moment from "moment";
 
-const HomeSlide = () => (
+export const HomeSlide = () => (
   <Box color="navy" padding={3}>
     <Heading size="md" color="white">
       conduit
@@ -22,13 +22,13 @@ interface TagBox {
   tags: string[];
   onClick: (tag: string) => void;
 }
-const TagBox = ({ tags, onClick }: TagBox) => (
+export const TagBox = ({ tags, onClick }: TagBox) => (
   <Box color="lightWash" marginBottom={2} marginTop={2} padding={3}>
     {tags.map((tag) => {
       return (
         <Tag.CheckableTag
-          checked={false}
           key={tag}
+          checked={true}
           onChange={() => {
             onClick(tag);
           }}
@@ -60,6 +60,10 @@ const useTagAsTab = () => {
   };
   const [articles, loading] = useArticles({
     tag: tabs[activeIndex].text,
+    author: "",
+    favorited: "",
+    limit: 20,
+    offset: 0,
   });
   const result: [
     { articles: Article[]; loading: boolean },
@@ -78,7 +82,7 @@ const useTagAsTab = () => {
 };
 
 export default () => {
-  const allTags = useAllTags();
+  const allTags = useHotTags();
   const [{ articles, loading }, handleAddTab, TagTabs] = useTagAsTab();
   const articleBoxes = articles.map((article) => (
     <ArticleBox key={article.slug} article={article} />

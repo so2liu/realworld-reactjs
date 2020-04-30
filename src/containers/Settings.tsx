@@ -4,10 +4,10 @@ import Form, { TInput } from "../components/Form";
 import { Heading } from "gestalt";
 import { updateUser } from "../API";
 import { userInfo } from "os";
-import { useUserStore } from "../contextProvider";
+import { useStore } from "../contextProvider";
 
 export default () => {
-  const user = useUserStore();
+  const user = useStore().userStore;
   const settingInputs: Array<TInput> = [
     { name: "profileURL", label: "URL of avatar", type: "text" },
     { name: "username", label: "Username", type: "text" },

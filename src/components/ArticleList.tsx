@@ -7,6 +7,19 @@ import { useObserver } from "mobx-react-lite";
 export default (props: { articleStore: TArticleStore }) => {
   const articleStore = props.articleStore;
 
+  const Loading = () => (
+    <>
+      {" "}
+      {articleStore.loading && (
+        <Spinner
+          key="loading-top"
+          accessibilityLabel="Loading"
+          show
+          size="md"
+        />
+      )}
+    </>
+  );
   return useObserver(() => (
     <>
       <pre>{JSON.stringify(articleStore.query, null, 2)}</pre>
@@ -24,12 +37,11 @@ export default (props: { articleStore: TArticleStore }) => {
           inline
         />
       </Box>
-      {articleStore.loading && (
-        <Spinner key="articles" accessibilityLabel="Loading" show size="md" />
-      )}
+      <Loading />
       {articleStore.articles.map((article) => (
         <ArticleBox key={article.slug} article={article} />
       ))}
+
       <pre>
         {articleStore.articles.length > 0 &&
           JSON.stringify(articleStore.articles[0], null, 2)}

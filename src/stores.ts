@@ -52,6 +52,7 @@ const initQuery: QueryArticles = {
 export const createArticleStore = () => ({
   articles: [] as Article[],
   loading: false,
+  lastLoadTime: Date.now(),
   error: "",
   query: initQuery,
   appendArticles(articles: Article[]) {
@@ -82,8 +83,11 @@ export const createArticleStore = () => ({
     }
   },
   loadArticles() {
-    console.log("loadArticles");
-    this.query.offset += 20;
+    if (Date.now() - this.lastLoadTime > 5000) {
+      console.log("loadArticles");
+      this.query.offset += 20;
+      this.lastLoadTime = Date.now();
+    }
   },
   setQueryInitIfDirty() {
     if (this.query.author || this.query.favorited || this.query.tag)

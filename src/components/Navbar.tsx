@@ -60,7 +60,7 @@ const Navbar = observer(({ isSignedin, user, logout }: Navbar) => {
     <>
       <Box display="flex" direction="row" paddingX={2}>
         <Box flex="grow">
-          <Link href="http://localhost:3000/">Home</Link>
+          <Link href="/">Home</Link>
         </Box>
         <Box display="flex" direction="row">
           {isSignedin ? authNav : guestNav}
